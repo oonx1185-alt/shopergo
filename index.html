@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShoperGo - Toko Online</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background-color: #f0f8ff;
+      color: #333;
+    }
+    header {
+      background-color: #87cefa;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    .container {
+      padding: 2rem;
+    }
+    .product {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+    .card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: 0.3s;
+    }
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .card-body {
+      padding: 1rem;
+    }
+    .card-body h3 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+    .card-body p {
+      font-size: 0.9rem;
+      margin: 0.5rem 0;
+    }
+    .price {
+      font-weight: bold;
+      color: #0077cc;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background-color: #0077cc;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-top: 0.5rem;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #87cefa;
+      color: white;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ShoperGo</h1>
+    <p>Toko Fashion Murah & Stylish</p>
+  </header>
+
+  <div class="container">
+    <div class="product">
+      <div class="card">
+        <img src="https://karambeeakonveksi.com/wp-content/uploads/2016/10/kaos_polos_01-300x300.png" alt="Kaos Polos">
+        <div class="card-body">
+          <h3>Kaos Polos</h3>
+          <p>Kaos bahan cotton combed 30s, adem dan nyaman</p>
+          <p class="price">Rp35.000</p>
+          <a href="#" class="btn">Tambah ke Keranjang</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="https://jobb.co.id/wp-content/uploads/2023/10/rug-1681091636020-4.jpg" alt="Kemeja Kotak">
+        <div class="card-body">
+          <h3>Kemeja Kotak</h3>
+          <p>Kemeja lengan panjang cocok untuk kerja</p>
+          <p class="price">Rp70.000</p>
+          <a href="#" class="btn">Tambah ke Keranjang</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="https://fitinline.com/data/article/20150612/Makloon-Jeans-Bandung-000.jpg" alt="Celana Jeans">
+        <div class="card-body">
+          <h3>Celana Jeans</h3>
+          <p>Jeans slim fit warna biru dongker</p>
+          <p class="price">Rp90.000</p>
+          <a href="#" class="btn">Tambah ke Keranjang</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 ShoperGo. All rights reserved.
+  </footer>
+</body>
+</html>
