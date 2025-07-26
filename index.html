@@ -5,69 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ShoperGo - Toko Online</title>
   <style>
-    body {
-      margin: 0;
-      font-family: sans-serif;
-      background-color: #f0f8ff;
-      color: #333;
-    }
-    header {
-      background-color: #87cefa;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-    }
-    .container {
-      padding: 2rem;
-    }
-    .product {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-    }
-    .card {
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      overflow: hidden;
-      transition: 0.3s;
-    }
-    .card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-    }
-    .card-body {
-      padding: 1rem;
-    }
-    .card-body h3 {
-      margin: 0;
-      font-size: 1.2rem;
-    }
-    .card-body p {
-      font-size: 0.9rem;
-      margin: 0.5rem 0;
-    }
-    .price {
-      font-weight: bold;
-      color: #0077cc;
-    }
-    .btn {
-      display: inline-block;
-      padding: 0.5rem 1rem;
-      background-color: #0077cc;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      margin-top: 0.5rem;
-    }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background: #87cefa;
-      color: white;
-      margin-top: 2rem;
-    }
+    body { margin: 0; font-family: sans-serif; background-color: #f0f8ff; color: #333; }
+    header { background-color: #87cefa; color: white; padding: 1rem; text-align: center; }
+    .container { padding: 2rem; }
+    .product { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
+    .card { background: white; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); overflow: hidden; }
+    .card img { width: 100%; height: 200px; object-fit: cover; }
+    .card-body { padding: 1rem; }
+    .card-body h3 { margin: 0; font-size: 1.2rem; }
+    .card-body p { font-size: 0.9rem; margin: 0.5rem 0; }
+    .price { font-weight: bold; color: #0077cc; }
+    .btn { display: inline-block; padding: 0.5rem 1rem; background-color: #0077cc; color: white;
+      text-decoration: none; border-radius: 5px; margin-top: 0.5rem; cursor: pointer; }
+    footer { text-align: center; padding: 1rem; background: #87cefa; color: white; margin-top: 2rem; }
+    #cart { margin-top: 2rem; }
+    #cart-items { padding: 1rem; background: #ffffff; border-radius: 8px; box-shadow: 0 0 8px rgba(0,0,0,0.1); }
+    form { margin-top: 2rem; background: #ffffff; padding: 1rem; border-radius: 8px; box-shadow: 0 0 8px rgba(0,0,0,0.1); }
   </style>
 </head>
 <body>
@@ -77,41 +30,95 @@
   </header>
 
   <div class="container">
-    <div class="product">
-      <div class="card">
-        <img src="https://karambeeakonveksi.com/wp-content/uploads/2016/10/kaos_polos_01-300x300.png" alt="Kaos Polos">
-        <div class="card-body">
-          <h3>Kaos Polos</h3>
-          <p>Kaos bahan cotton combed 30s, adem dan nyaman</p>
-          <p class="price">Rp35.000</p>
-          <a href="#" class="btn">Tambah ke Keranjang</a>
-        </div>
-      </div>
+    <div class="product" id="product-list"></div>
 
-      <div class="card">
-        <img src="https://jobb.co.id/wp-content/uploads/2023/10/rug-1681091636020-4.jpg" alt="Kemeja Kotak">
-        <div class="card-body">
-          <h3>Kemeja Kotak</h3>
-          <p>Kemeja lengan panjang cocok untuk kerja</p>
-          <p class="price">Rp70.000</p>
-          <a href="#" class="btn">Tambah ke Keranjang</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <img src="https://fitinline.com/data/article/20150612/Makloon-Jeans-Bandung-000.jpg" alt="Celana Jeans">
-        <div class="card-body">
-          <h3>Celana Jeans</h3>
-          <p>Jeans slim fit warna biru dongker</p>
-          <p class="price">Rp90.000</p>
-          <a href="#" class="btn">Tambah ke Keranjang</a>
-        </div>
-      </div>
+    <div id="cart">
+      <h2>🛒 Keranjang Belanja</h2>
+      <div id="cart-items">Belum ada produk.</div>
     </div>
+
+    <form onsubmit="return openWhatsApp()" id="wa-form">
+      <h2>📲 Kirim Pesanan via WhatsApp</h2>
+      <label>Nama Anda: <input type="text" id="nama" required></label><br><br>
+      <label>Nomor WhatsApp: <input type="text" id="nomor" required></label><br><br>
+      <button type="submit" class="btn">Kirim via WhatsApp</button>
+    </form>
   </div>
 
   <footer>
     &copy; 2025 ShoperGo. All rights reserved.
   </footer>
+
+  <script>
+    const products = [
+      {
+        name: "Kaos Polos",
+        price: 35000,
+        desc: "Kaos bahan cotton combed 30s, adem dan nyaman",
+        image: "https://karambeeakonveksi.com/wp-content/uploads/2016/10/kaos_polos_01-300x300.png"
+      },
+      {
+        name: "Kemeja Kotak",
+        price: 70000,
+        desc: "Kemeja lengan panjang cocok untuk kerja",
+        image: "https://jobb.co.id/wp-content/uploads/2023/10/rug-1681091636020-4.jpg"
+      },
+      {
+        name: "Celana Jeans",
+        price: 90000,
+        desc: "Jeans slim fit warna biru dongker",
+        image: "https://fitinline.com/data/article/20150612/Makloon-Jeans-Bandung-000.jpg"
+      }
+    ];
+
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function saveCart() {
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderCart();
+    }
+
+    function addToCart(index) {
+      cart.push(products[index]);
+      saveCart();
+    }
+
+    function renderProducts() {
+      const list = document.getElementById('product-list');
+      products.forEach((p, i) => {
+        list.innerHTML += `
+          <div class="card">
+            <img src="${p.image}" alt="${p.name}">
+            <div class="card-body">
+              <h3>${p.name}</h3>
+              <p>${p.desc}</p>
+              <p class="price">Rp${p.price.toLocaleString('id-ID')}</p>
+              <button class="btn" onclick="addToCart(${i})">Tambah ke Keranjang</button>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    function renderCart() {
+      const cartBox = document.getElementById('cart-items');
+      if (cart.length === 0) {
+        cartBox.innerHTML = 'Belum ada produk.';
+        return;
+      }
+      cartBox.innerHTML = cart.map((item, i) => `<p>${item.name} - Rp${item.price.toLocaleString('id-ID')}</p>`).join('');
+    }
+
+    function openWhatsApp() {
+      const nama = document.getElementById('nama').value;
+      const nomor = document.getElementById('nomor').value;
+      const pesan = encodeURIComponent(\`\${nama} ingin memesan:\n\` + cart.map(p => \`\${p.name} - Rp\${p.price.toLocaleString('id-ID')}\`).join('\n'));
+      window.open(\`https://wa.me/\${nomor}?text=\${pesan}\`, '_blank');
+      return false;
+    }
+
+    renderProducts();
+    renderCart();
+  </script>
 </body>
 </html>
