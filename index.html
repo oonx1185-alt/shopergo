@@ -2,55 +2,88 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Form Order ShoperGo</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ShoperGo</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; }
-    h2 { color: #007acc; }
-    label { display: block; margin-bottom: 10px; }
-    input, textarea, select { width: 100%; padding: 8px; margin-top: 4px; }
-    button { padding: 10px 20px; background-color: #007acc; color: white; border: none; cursor: pointer; }
-    button:hover { background-color: #005f99; }
-    #msg { margin-top: 15px; }
+    body { font-family: sans-serif; background: #e6f0ff; color: #333; margin: 0; padding: 0; }
+    header { background: #2196f3; color: white; padding: 1rem; text-align: center; }
+    .product { display: flex; flex-wrap: wrap; justify-content: center; padding: 1rem; gap: 1rem; }
+    .item { background: white; border-radius: 10px; padding: 1rem; width: 250px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .item img { width: 100%; border-radius: 5px; }
+    form { background: white; margin: 1rem auto; padding: 1rem; max-width: 500px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    input, textarea, select { width: 100%; padding: 0.5rem; margin-bottom: 1rem; border-radius: 5px; border: 1px solid #ccc; }
+    button { background: #2196f3; color: white; padding: 0.7rem 1rem; border: none; border-radius: 5px; cursor: pointer; }
   </style>
 </head>
 <body>
-  <h2>Form Order ShoperGo</h2>
-  <form id="order-form">
-    <label>Nama:<br><input type="text" name="nama" required></label>
-    <label>No WhatsApp:<br><input type="text" name="wa" required></label>
-    <label>Alamat Lengkap:<br><textarea name="alamat" required></textarea></label>
-    <label>Produk:<br>
-      <select name="produk">
-        <option value="Kaos Polos">Kaos Polos</option>
-        <option value="Kemeja Kotak">Kemeja Kotak</option>
-        <option value="Celana Jeans">Celana Jeans</option>
-      </select>
-    </label>
-    <label>Catatan:<br><textarea name="catatan"></textarea></label>
-    <button type="submit">Kirim</button>
+  <header>
+    <h1>ShoperGo</h1>
+    <p>Baju & Fashion Murah Langsung Pabrik</p>
+  </header>
+
+  <section class="product">
+    <div class="item">
+      <img src="https://karambeeakonveksi.com/wp-content/uploads/2016/10/kaos_polos_01-300x300.png" alt="Kaos Polos">
+      <h3>Kaos Polos</h3>
+      <p>Rp35.000 – Bahan cotton combed 30s, adem dan nyaman</p>
+    </div>
+    <div class="item">
+      <img src="https://jobb.co.id/wp-content/uploads/2023/10/rug-1681091636020-4.jpg" alt="Kemeja Kotak">
+      <h3>Kemeja Kotak</h3>
+      <p>Rp70.000 – Kemeja lengan panjang cocok untuk kerja</p>
+    </div>
+    <div class="item">
+      <img src="https://fitinline.com/data/article/20150612/Makloon-Jeans-Bandung-000.jpg" alt="Celana Jeans">
+      <h3>Celana Jeans</h3>
+      <p>Rp90.000 – Jeans slim fit warna biru dongker</p>
+    </div>
+  </section>
+
+  <form id="orderForm">
+    <h2>Formulir Pemesanan</h2>
+    <input type="text" name="nama" placeholder="Nama Lengkap" required>
+    <input type="text" name="wa" placeholder="Nomor WhatsApp (contoh: 6281234567890)" required>
+    <textarea name="alamat" placeholder="Alamat Lengkap" required></textarea>
+    <select name="produk" required>
+      <option value="">Pilih Produk</option>
+      <option value="Kaos Polos - Rp35.000">Kaos Polos - Rp35.000</option>
+      <option value="Kemeja Kotak - Rp70.000">Kemeja Kotak - Rp70.000</option>
+      <option value="Celana Jeans - Rp90.000">Celana Jeans - Rp90.000</option>
+    </select>
+    <textarea name="catatan" placeholder="Catatan tambahan (opsional)"></textarea>
+    <button type="submit">Kirim Order</button>
   </form>
 
-  <p id="msg"></p>
-
   <script>
-    const form = document.getElementById('order-form');
-    const msg = document.getElementById('msg');
-    form.addEventListener('submit', e => {
+    const form = document.getElementById('orderForm');
+    form.addEventListener('submit', function(e) {
       e.preventDefault();
+
       const data = new FormData(form);
-      fetch('https://script.google.com/macros/s/AKfycbx4olwIQ85cE1_8OUlbbHVoQ1S6jLq_E6tTt58D3gIlYnsl1Iz8QfeQmgFk4lrizumBAQ/exec', {
-        method: 'POST',
+      const obj = Object.fromEntries(data.entries());
+
+      const gsheetURL = "https://script.google.com/macros/s/AKfycbx4olwIQ85cE1_8OUlbbHVoQ1S6jLq_E6tTt58D3gIlYnsl1Iz8QfeQmgFk4lrizumBAQ/exec";
+      const waAdmin = "6281234567890"; // Ganti sesuai kebutuhan
+
+      fetch(gsheetURL, {
+        method: "POST",
+        mode: "no-cors",
         body: data
-      })
-      .then(response => response.text())
-      .then(result => {
-        msg.textContent = "✅ Order berhasil dikirim!";
+      }).then(() => {
+        const pesan = `Halo Admin, ada pesanan:
+
+Nama: ${obj.nama}
+WA: ${obj.wa}
+Alamat: ${obj.alamat}
+Produk: ${obj.produk}
+Catatan: ${obj.catatan}`;
+        const linkWA = `https://wa.me/${waAdmin}?text=${encodeURIComponent(pesan)}`;
+        window.open(linkWA, "_blank");
+        alert("Order berhasil dikirim!");
         form.reset();
-      })
-      .catch(error => {
-        msg.textContent = "❌ Gagal mengirim order.";
+      }).catch(err => {
+        alert("Gagal mengirim order!");
       });
     });
   </script>
